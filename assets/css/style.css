@@ -1,0 +1,10 @@
+/* base visual */ 
+body {
+	background-color: #2e2e2e;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; /* best hipster font type */
+	color: white; 
+	border-style: solid;
+	border-color: tomato;
+	text-align: center;
+	font-size: 20px; 
+}
