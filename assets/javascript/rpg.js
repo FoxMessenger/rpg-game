@@ -41,4 +41,7 @@ var play = function(){};			// function to start game
 
 
 
+window.onload = function () {
+	player = [];
+}
 
