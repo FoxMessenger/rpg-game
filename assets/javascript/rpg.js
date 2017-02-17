@@ -21,9 +21,12 @@
 // ** 					NOTES					** //
 
 
-	// We need this to run the actual code in the DOM //
+	// We need this syntax below to run the actual code in the DOM //
 $(document).ready(function() {
 
+		// A function that contains the specific stats of the champ
+		// I'm hoping that I can grab just one part if need by
+		// such as, console.log(champStats(name))
 	var champStats = function (name, hitPoints, attPower, icon) {
 		this.name = name;
 		this.hitPoints = hitPoints;
@@ -34,20 +37,21 @@ $(document).ready(function() {
 
 		// all playable characters available
 	var champions = [ 
-		new champStats('Kali', 3300, 170, 'assets/images/2078.png' /*, 35 */),
-		new champStats('Super Girl', 3280, 110 /*, 52 */), 
-		new champStats('Kanna', 4000, 165 /*, 40 */), 
-		new champStats('Sasha', 3500, 120 /*, 15 */), 
-		new champStats('Ilmina', 4200, 220 /*, 12 */), 
-		new champStats('Typhon', 3800, 155 /*, 28 */), 
-		new champStats('Sephiroth', 3200, 200 /*, 6 */), 
-		new champStats('Vishnu', 3650, 195 /*, 30 */), 
-		new champStats('Psychopomp', 3500, 215 /*, 6 */), 
-		new champStats('Rei', 4200, 175 /*, 52 */), 
-		new champStats('Asuka', 3600, 185 /*, 13 */), 
-		new champStats('Arch', 5000, 100 /*, 70 */), 
+		new champStats('Kali', 3300, 170, '<img src="assets/images/2078.png">' /*, 35 */),
+		new champStats('Super Girl', 3300, 110, '<img src="assets/images/1678.png">' /*, 52 */), 
+		new champStats('Kanna', 4000, 165, '<img src="assets/images/2534.png">'/*, 40 */), 
+		new champStats('Sasha', 3500, 120, '<img src="assets/images/2372.png">'/*, 15 */), 
+		new champStats('Ilmina', 4200, 220, '<img src="assets/images/3274.png">'/*, 12 */), 
+		new champStats('Typhon', 3800, 155, '<img src="assets/images/1949.png">'/*, 28 */), 
+		new champStats('Sephiroth', 3200, 200, '<img src="assets/images/2032.png">'/*, 6 */), 
+		new champStats('Vishnu', 3650, 195, '<img src="assets/images/2081.png">'/*, 30 */), 
+		new champStats('Psychopomp', 3500, 215, '<img src="assets/images/3285.png">' /*, 6 */), 
+		new champStats('Rei', 4200, 175, '<img src="assets/images/3393.png">' /*, 52 */), 
+		new champStats('Asuka', 3600, 185, '<img src="assets/images/3396.png">' /*, 13 */), 
+		new champStats('Arch', 5000, 95, '<img src="assets/images/851.png">' /*, 70 */), 
 	]
 
+		// these are the variables I believe I need
 	var name;							// your name
 	var hitPoints;						// character HP
 	var attPower;						// character Attack power
@@ -59,7 +63,13 @@ $(document).ready(function() {
 	var enemy;							// maybe just a class change (characters either becomes player active, or enemy active)
 	var stage;							// where the character goes after chosen --> stages can be: Your Character, Enemies Available, Enemy Fighting, Attack Button
 
-	var chooseChamp = function(){};		// choose character onclick function from the options available
+	// adding the character to the chosen character div
+	$("#buttons").on("click", function() {
+    	var champions = (this.innerHTML);
+    	this.addClass("active");
+    	this.onclick = null; // if the button is already clicked we don't want it setting off again
+
+	});		// choose character onclick function from the options available
 										// if statement
 
 	var isPlayer = function(){};		// this will take the chooseChar function and set it as player
@@ -77,21 +87,21 @@ $(document).ready(function() {
 
 	var play = function(){};			// function to start game
 
-
+	// the forLoop is to get the characters on the screen.
+	// I pulled it straight from the fridge example, so I migth have to remove some code.
 	for (var i = 0; i < champions.length; i++)	{
-		console.log(champions[i]);
 
 		var champBtn = $("<button>");			// this variable is equal to a button that will soon be ported to the HTML page
-
-		champBtn.addClass("col-md-1 champ-button-color");
-
+		champBtn.addClass("col-md-1 champ champ-button-color");
 		champBtn.attr("data-champ", champions[i]);
-
-		champBtn.html(champions[i]);
+		champBtn.html(champions[i].icon);
 
 		$("#buttons").append(champBtn);
 	}	// creating the character buttons
 
+
+
+	console.log("You have chosen champion: " + champions[i].name);
 
 }); 									// getting a highlighted ) in my code, but I'm pretty sure it's suppose to be there
 

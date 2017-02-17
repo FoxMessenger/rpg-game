@@ -10,15 +10,25 @@
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; /* best hipster font type */
 	color: white; 
 	border-style: solid;
-	border-color: tomato;
+	border-radius: 5px;
+	/*border-color: tomato;*/
 	text-align: center;
 	font-size: 20px; 
 }
 
+.col-md-4 { float:left; }
 
-/*.champ { 
-	width: 30px; 
-	height: 30px;
+		/* this active will occur when you select a champion. Only one champion at a time can have this active */
+#active {
+	margin: auto;
+	border-style: solid;
+	background-color: tomato;
+
+}
+
+.champ { 
+	/*width: 30px; 
+	height: 30px;*/
 	padding: 2px;
 	float: left;
 	margin: 2px;
@@ -29,6 +39,6 @@
 }
 
 .champ-button-color {}
-*/
+
 
 
