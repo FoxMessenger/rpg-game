@@ -92,18 +92,53 @@ $(document).ready(function() {
 	for (var i = 0; i < champions.length; i++)	{
 
 		var champBtn = $("<button>");			// this variable is equal to a button that will soon be ported to the HTML page
-		champBtn.addClass("col-md-1 champ champ-button-color");
-		champBtn.attr("data-champ", champions[i]);
+		
+		champBtn.addClass("champ-button champ generalBtn");
+		champBtn.attr("src"	, champions[i.icon]);
 		champBtn.html(champions[i].icon);
 
-		$("#buttons").append(champBtn);
+		$("#champBtn").append(champBtn);
 	}	// creating the character buttons
 
+		// adding the champ to your selected champ section
+		$(".champ-button").on("click", function(){
+			var champSelection = $("<div>");
+			
+			champSelection.addClass("champ");
+			champSelection.html($(this).attr("src", champions[i.icon]).clone());	
+			// champSelection.html($(this).attr("src", champions[i.name]).clone());	
+			// without .clone() the image will delete it's position and move it to the Arena
+			
+			$("#active").html(champSelection);
+			// console.log(championSelection);
+	});
+
+		// check if champSelected or enemySelected
+    	var check = function() {
+    		
+    		for (var i = 0; i < word.length; i++) {
+    			if (word[i] === guess) {
+    				guesses[i].innerHTML = guess;
+
+    				correctGuesses += 1;
+    				console.log("are have guessed " + correctGuesses + " correctly.");
+    			}
+    		}
+    		// check the charact index of the letter pressed
+    		var checkChar = (word.indexOf(guess));
+    		if (checkChar === -1) {
+    			lives -= 1;
+    			scoreboard();
+    		}  else {
+    			scoreboard();
+    		}
+    }
 
 
-	console.log("You have chosen champion: " + champions[i].name);
 
-}); 									// getting a highlighted ) in my code, but I'm pretty sure it's suppose to be there
+	console.log("You have chosen champion: ");
+
+}); // getting a highlighted ) in my code, but I'm pretty sure it's suppose to be there
 
 
 

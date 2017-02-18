@@ -22,32 +22,33 @@
 <div class="container">
 	<!-- Title of game -->
 	<div class="row">
-		<div> GAME TITLE </div>
+		<div class="generalBtn"> GAME TITLE </div>
 	</div>
 	<!-- Arena Space -->
 	<div class="row">
-		<div> ARENA </div>
+		<div class="generalBtn"> ARENA </div>
+		
+			<div class="generalBtn" id="active"> Chosen Character </div>
+			<button class="generalBtn"> SELECT CHAMPION </button>
+
+			<div class="col-md-6 generalBtn"> Opponent </div>
+			<button class="generalBtn"> SELECT CHAMPION </button>
+			
+		
 	</div>
 
-	<!-- Arena Space -->
-	<div class="row">
-		<div> CHAMPION SELECT </div>
-	</div>
 
-	<!-- Character Select 12 -->
+
+	<!-- Champion Select: 12 -->
 	<div class="row"> 
-		<button id="buttons"></button>
+		<div id="champBtn"></div>
 	</div>
 
 	<!-- Attack Button | Chosen Character | Opponent -->
 	<div class="row"> 
-		<div class="col-md-4"> Attack Buttons </div>
-		
-		<div class="col-md-4" id="active"> Chosen Character </div>
-		
-		<div class="col-md-4"> Opponent </div>
+		<button class="col-md-6 generalBtn" id="attBtn"> Attack Buttons </button>
 	</div>
-</div>
+
 
 </body>
 </html>
