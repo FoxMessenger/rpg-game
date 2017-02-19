@@ -45,7 +45,18 @@ $(document).ready(function() {
 
 										// create an if statement that says: if class state is stateSelected move to opponent select otherwise go on with the rest of the game
 
-	var combat = function(){};			// the combat logic
+	var battle = false;
+	var playerDamage = false;
+	var enemyDamage = false;
+	var ifLocked = false;
+	
+	// var currentPlayerHealth = player.health;
+	// var currentEnemyHealth = enemy.health;
+	
+	var combat = function(){			// the combat logic
+
+		battle = true;
+	};
 
 		// Combat Pseudo Code: champ vs opponent
 		
@@ -122,26 +133,35 @@ $(document).ready(function() {
 		new champStats('Psychopomp', 3500, 215, '<img src="assets/images/3285.png">' /*, 6 */), 
 		new champStats('Rei', 4200, 175, '<img src="assets/images/3393.png">' /*, 52 */), 
 		new champStats('Asuka', 3600, 185, '<img src="assets/images/3396.png">' /*, 13 */), 
-		new champStats('Arch', 5000, 95, '<img src="assets/images/851.png">' /*, 70 */)
+		new champStats('Archer', 5000, 95, '<img src="assets/images/851.png">' /*, 70 */)
 	];
 	
-	for (var i = 0; i < champions.length; i++)	{									// the forLoop is to get all the characters in the object array on the screen.
-		var champAvailable = $("<button>");											// this variable is equal to a button that will soon be ported to the HTML page
+	var champInfo = $('#champAvailable').each(function(){
+		for (var i = 0; i < champions.length; i++)	{								// the forLoop is to get all the characters in the object array on the screen.
+			var champAvailable = $("<button>");										// this variable is equal to a button that will soon be ported to the HTML page
 			champAvailable.addClass("champ styling hoverAnimation");				// creating what the character buttons looks like
 			champAvailable.attr("id", champions[i].name);							// adding the data for names
 			champAvailable.attr("data-hp", champions[i].hitPoints);					// adding the data for hp 
-			champAvailable.attr("data-attPower", champions[i].attPower);			// adding the data for attack power 
-			champAvailable.attr("data-icon", champions[i].icon);					// adding the data for icons
+			champAvailable.attr("data-attack", champions[i].attPower);				// adding the data for attack power 
 			champAvailable.html(champions[i].icon);									// porting the image to the html
 			$("#champAvailable").append(champAvailable);							// checking the html for the id "champBtn" and connecting my champBtn variable to it
 																					// .append() will attach each character in my array sequentially.
-	}																			
+		}	
+
+	});
+																
 		
+		// the Arena
 		
 		$(".champ").on("click", function(event){									// adding the champ to the selected champ section
 			var champSelection = $("<div>");										// deciding that I will make the section a new Div
-			
-			// champSelection.data("champ data-name");								// stores the data of the value I have given it
+			var champInfo = $(this);
+      
+     		var data = {
+        		name: champInfo.attr('id'),
+        		hp: champInfo.data('hp'),
+        		attack: champInfo.data('attack')
+	    }
 			
 			champSelection.append($(this).clone().addClass("clone").removeClass("hoverAnimation"));		// "this" is equal to the champBtn, which contains the stored data of my champions
 																										// .clone makes a new icon in the champion div
@@ -150,13 +170,19 @@ $(document).ready(function() {
 																										// without .clone() the image will delete its original position and move it to the champ selection space
 			
 			$("#playerChamp").html(champSelection);														// this ports the cloned image to the html
-			$("#confirmChamp").fadeIn( 300 );
+			$("#confirmChamp").fadeIn( 300 );															// fades in confirmChamp Button from champion onclick
 
+					var arena = $("<div>");
+					$("#arena").html(`
+        				<p>${data.name}</p>
+          				<p>HP ${data.hp}</p>
+          				<p>attack ${data.attack}</p>
+     				`);;																				// This should display your characters info.
+					console.log(data);
 	});
 
-		// the Arena
-	for (var i = 0; i < champions.length; i++)	{	
-		var arena = $("<p>");
+	
+
 
 	// -- Confirm Champ Pseudo Code: selecting the player and the opponent -- //
 
