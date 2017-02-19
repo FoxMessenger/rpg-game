@@ -23,6 +23,10 @@
 
 	// We need this syntax below to run the actual code in the DOM //
 $(document).ready(function() {
+	
+	// First I want to hide these buttons, until I call them when I select a champ 	
+	$("#confirmChamp").hide();
+    $("#confirmEnemy").hide();
 
 	// these are the variables I believe I need
 
@@ -32,7 +36,51 @@ $(document).ready(function() {
 	
 	var enemy;							// once your character is chosen now it's the choosing opponent phase
 										// this will take the champAvailable function, minus the var Player choice
+
+	var playerState;					// this will determine whether a champion has been chosen for the player
+	var enemyState;						// same as above, but for the opponent
+		
+	var gameState;						// create an object that stores information about the game state
+										// this will be the state of continues, play again, game over, etc.
+
+										// create an if statement that says: if class state is stateSelected move to opponent select otherwise go on with the rest of the game
+
 	var combat = function(){};			// the combat logic
+
+		// Combat Pseudo Code: champ vs opponent
+		
+		// $("#attBtn").on("click", function(event) {
+		// 	if (player.attPower < enemy.hitPoints) {
+		// 			enemy.hitPoints -= player.attPower;
+					// store current hp
+		// 			// run function (attPower + 20)
+		// 	}  if else (player.attPower === enemy.hitPoints || player.attPower > enemy.hitPoints) {
+		// 			// run function (attPower + 20)
+		// 			// in the arena display "Victory!"
+					// var wins += 1;
+		// 			// end attack combat
+		// 	} 
+		// if (wins === 3) {
+					// in the area display "You Win!"
+		//  }
+
+		// 	// run function enemy attack phase
+
+		// 	if (enemy.attPower < player.hitPoints) {
+		// 			enemy.hitPoints -= player.attPower;
+		// 			// end attack combat
+		// 	}  if else (enemy.attPower === player.hitPoints || enemy.attPower > player.hitPoints) {
+		// 			// end combat
+					// in the arena display "Defeat"
+		//			// in the area display "Continue?"
+					// if (continue === true) {
+					// 	continue -= 1;
+					// } else {
+					// 	end game
+					// }
+					// display "Play Again" in arena
+		// 	} 		
+		// };
 
 	var name;							// champ name
 	var hitPoints;						// champ HP
@@ -97,138 +145,48 @@ $(document).ready(function() {
 			
 			champSelection.append($(this).clone().addClass("clone").removeClass("hoverAnimation"));		// "this" is equal to the champBtn, which contains the stored data of my champions
 																										// .clone makes a new icon in the champion div
-																										// .addClass lets me adjust the clone to looks different from the other options
+																										// .addClass lets me adjust the clone to look different from the other champions icons
 																										// removeClass removes the hover animation from the clone
-																										// without .clone() the image will delete it's position and move it to the Arena
-			$("#activeChamp").html(champSelection);														// this ports the cloned image to the 
+																										// without .clone() the image will delete its original position and move it to the champ selection space
 			
+			$("#playerChamp").html(champSelection);														// this ports the cloned image to the html
+			$("#confirmChamp").fadeIn( 300 );
+
 	});
-		// champion select
 
-		// changing the champion selection state
-		// gamestate starts with champion selection as default
-		// When confirm Champion selection button is clicked:
-		// Champion will become player
-		// when champion becomes player:
-		// champion in the champion select section becomes Null
-		// game state becomes opponent selection
-		// when confirm Opponent selection button is clicked:
-		// champion becomes opponent
-		// if (championState === true){
-		// 		champions[i] = player;
-		// 		this.onclick = null; 
-		// // } if else (enemyState === true) {
-		// 		champions[i] = enemy;
-		// 		champions[].onclick = null;
-		// 		combat = true;
-		// }
+		// the Arena
+	for (var i = 0; i < champions.length; i++)	{	
+		var arena = $("<p>");
 
+	// -- Confirm Champ Pseudo Code: selecting the player and the opponent -- //
 
-		// Combat
-		
-		// $("#attBtn").on("click", function(event) {
-		// 	if (player.attPower < enemy.hitPoints) {
-		// 			enemy.hitPoints -= player.attPower;
-					// store current hp
-		// 			// run function (attPower + 20)
-		// 	}  if else (player.attPower === enemy.hitPoints || player.attPower > enemy.hitPoints) {
-		// 			// run function (attPower + 20)
-		// 			// in the arena display "Victory!"
-					// var wins += 1;
-		// 			// end attack combat
-		// 	} 
-		// if (wins === 3) {
-					// in the area display "You Win!"
-		//  }
+		// (var playerState = false) as default
+		// When the "confirm-selection Champion button" is clicked:
+		// (var player = champions[i]) and (var champState = true)
+        // -- I'm hoping that the data-sets carry over here and that you don't get every data-set of the champions[i]. Just the one you selected -- //
+		// when playerState is true:
+		// champions[i] in the champion select section becomes onclick: Null
+		// end player selection part. 
 
-		// 	// run function enemy attack phase
-
-		// 	if (enemy.attPower < player.hitPoints) {
-		// 			enemy.hitPoints -= player.attPower;
-		// 			// end attack combat
-		// 	}  if else (enemy.attPower === player.hitPoints || enemy.attPower > player.hitPoints) {
-		// 			// end combat
-					// in the arena display "Defeat"
-		//			// in the area display "Continue?"
-					// if (continue === true) {
-					// 	continue -= 1;
-					// } else {
-					// 	end game
-					// }
-					// display "Play Again" in arena
-		// 	} 		
+        // Champion selection then moves to: Opponent selection
+        // (var enemyState = false) as default
+		// when "confirm-selection Opponent button" is clicked:
+		// (var enemy = champions[i]) and (var enemyState = true) 
+        // champions[i] in the champion select section becomes onclick: Null
+        // end Opponent selection part
 
 
-		// };
-
-
-		$("#activeChamp").on("click", function(){
-			var player = $("#confirmChamp");
-			if (player === "#confirmChamp") {
-				this.onclick = null; 	// if the button is already clicked we don't want it setting off again
-			};
+		// $("#activeChamp").on("click", function(){
+		// 	var player = $("#confirmChamp");
+		// 	if (player === "#confirmChamp") {
+		// 		this.onclick = null; 	// if the button is already clicked we don't want it setting off again
+		// 	};
 			
-		});								// the "Select Champion" button will add a "statusClass" to champion state. It will listen to the event listener on("click") we'll call it: player
-
-		var enemyState;					// same as above, we'll call it: enemy;
-		
-		var gameState;					// create an object that stores information that about the game state
-										// contains mostly data
-
-										// create an if statement that says: if class state is stateSelected move to opponent select otherwise go on with the rest of the game
+		// });								// the "Select Champion" button will add a "statusClass" to champion state. It will listen to the event listener on("click") we'll call it: player	
 
 
 
-		// check if champSelected or enemySelected
-    // var check = function() {
-
-    // 	$("#playerIs").on("click", function (event) {
-    // 		var playerIs = champSelection;
-    // 		console.log(playerIs);
- 
-    // 		guess.setAttribute("class", "active");
-    // 		guess.onkeyup = null; // if the button is already clicked we don't want it setting off again
-
-    // 		for (var i = 0; i < word.length; i++) {
-    // 			if (word[i] === guess) {
-    // 				guesses[i].innerHTML = guess;
-
-    // 				correctGuesses += 1;
-    // 				console.log("are have guessed " + correctGuesses + " correctly.");
-    // 			}
-    // 		}
-   	// 	 }) 
-    		
-    // 	for (var i = 0; i < champions.length; i++) {
-    // 		if (champion[i] === isPlayer) {
-    // 			guesses[i].innerHTML = guess;
-
-    // 			correctGuesses += 1;
-    // 			console.log("are have guessed " + correctGuesses + " correctly.");
-    // 		}
-   	// 	}
-    		
-    // 	// check the charact index of the letter pressed
-   	// 	var checkChar = (word.indexOf(guess));
-   	// 	if (checkChar === -1) {
-   	// 		lives -= 1;
-   	// 		scoreboard();
-   	   		
-   	//    		}  else {
-   			
-   	// 		scoreboard();
-    // 		}
-
-    // 	lettersList.onclick = function() {
-    // 		var guess = (this.innerHTML);
-    // 		this.setAttribute("class", "active");
-    // 		this.onclick = null; // if the button is already clicked we don't want it setting off again
-    // 	}
-    // }
-
-	
-
-}); // getting a highlighted ) in my code, but I'm pretty sure it's suppose to be there
+});
 
 
 

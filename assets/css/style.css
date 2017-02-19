@@ -1,16 +1,7 @@
 /* base visual */ 
-/*.container {width: 50%;}*/
-.row,
-.col-md-1,
-.col-md-4,
-.col-md-6,
-.col-md-12
- {
-}
 
+.navbar {text-align: center;}
 .styling {
-
-	margin: 5px auto;
 	background-color: #2e2e2e;
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; /* best hipster font type */
 	color: white; 
@@ -18,48 +9,56 @@
 	border-radius: 5px;
 	text-align: center;
 	font-size: 20px; 
-
 }
-	/* this animation is an added class from Javascript — it is removed from the clone */
+
+.stylingSelect {
+	background-color: white;
+	color: white; 
+	padding: 20px;
+}
+
+.stylingChoose {
+	background-color: #2e2e2e;
+	color: tomato; 
+	border-style: solid;
+	border-radius: 5px;
+	text-align: center;
+	font-size: 20px;
+	margin-bottom: 10px; 
+}
+
+.selectButton { margin: 5px auto; ; }
+
+/* this animation is an added class from Javascript — it is removed from the clone */
 .hoverAnimation:hover {
-	transform: scale(1.02,1.02);
-	opacity: 1;
-	animation: 3s bounceAround ease;
-    transition: 0.5s all ease;
-}
-	/* this is the opacity state of the clone */
-
-.col-md-6 { }
-
-		/* this active will occur when you select a champion. Only one champion at a time can have this active */
-.arena {
-
-}
-
-#activeChamp {
-	/*margin: 10px;*/
-	border-style: solid;
-	background-color: tomato;
-}
-
-#activeOpponent {
-	/*margin: 10px;*/
-	border-style: solid;
-	background-color: tomato;
+	transform: scale(1.02,1.02);		/* animation of selection */
+	opacity: 1;							/* animation of opacity */
+    transition: 0.5s all ease;			/* animation speed */
 }
 
 .champ { 
-	/*width: 30px; 
-	height: 30px;*/
 	padding: 20px;
-	/*float: left;*/
-	margin: 20px;
-	opacity: 0.80;
+	/*margin: 20px;*/
+	opacity: 0.80;						/* keeping all icons slighty off of opacity:; 1 */
 }
 
-.clone { opacity: 1; }
+.clone { opacity: 1; } 					/* this is the opacity state of the clone */
+	
+#attBtn { 
+	background-color: tomato;
+	margin: 5px auto; 
+	width: 100%;} 			/* attack button */
 
-#attBtn {margin: 0 auto;}
+#playerChamp,
+#OppChamp { 
+	border-style: solid; 
+	/*float: left;*/
+}
+/*
 
+.hidden { display:none; }
+
+.unhidden{ display:block; }
+*/
 
 
