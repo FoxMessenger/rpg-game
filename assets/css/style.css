@@ -1,6 +1,5 @@
 /* base visual */ 
 /*.container {width: 50%;}*/
-
 .row,
 .col-md-1,
 .col-md-4,
@@ -9,7 +8,7 @@
  {
 }
 
-.generalBtn {
+.styling {
 
 	margin: 5px auto;
 	background-color: #2e2e2e;
@@ -17,20 +16,36 @@
 	color: white; 
 	border-style: solid;
 	border-radius: 5px;
-	/*border-color: tomato;*/
 	text-align: center;
 	font-size: 20px; 
 
 }
+	/* this animation is an added class from Javascript — it is removed from the clone */
+.hoverAnimation:hover {
+	transform: scale(1.02,1.02);
+	opacity: 1;
+	animation: 3s bounceAround ease;
+    transition: 0.5s all ease;
+}
+	/* this is the opacity state of the clone */
 
 .col-md-6 { }
 
 		/* this active will occur when you select a champion. Only one champion at a time can have this active */
-#active {
+.arena {
+
+}
+
+#activeChamp {
 	/*margin: 10px;*/
 	border-style: solid;
 	background-color: tomato;
+}
 
+#activeOpponent {
+	/*margin: 10px;*/
+	border-style: solid;
+	background-color: tomato;
 }
 
 .champ { 
@@ -39,9 +54,10 @@
 	padding: 20px;
 	/*float: left;*/
 	margin: 20px;
+	opacity: 0.80;
 }
 
-.champ-button-color {}
+.clone { opacity: 1; }
 
 #attBtn {margin: 0 auto;}
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>hangman</title>
+	<title>Role Playing Game</title>
 
 	<!-- linking Bootstrap -->
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -17,36 +17,34 @@
 	<script type="text/javascript" src="assets/javascript/rpg.js"></script>
 </head>
 
-  	<!-- We'll need 6 Rows but only 2 columns to begin this -->
+ 	<!-- We'll need 6 Rows but only 2 columns to begin this -->
 <body>
 <div class="container">
+
 	<!-- Title of game -->
 	<div class="row">
-		<div class="generalBtn"> GAME TITLE </div>
+		<div class="styling"> Dragon Quest XXIX </div>
 	</div>
+
 	<!-- Arena Space -->
 	<div class="row">
-		<div class="generalBtn"> ARENA </div>
+		<div class="styling"> ARENA </div>	
 		
-			<div class="generalBtn" id="active"> Chosen Character </div>
-			<button class="generalBtn"> SELECT CHAMPION </button>
+			<div class="col-md-3 styling" id="activeChamp"> Chosen Character </div>
+			<button class="col-md-3 styling"> Confirm CHAMPION </button>
 
-			<div class="col-md-6 generalBtn"> Opponent </div>
-			<button class="generalBtn"> SELECT CHAMPION </button>
-			
-		
+			<div class="col-md-3 styling" id="activeOpp"> Opponent </div>
+			<button class="col-md-3 styling"> confirm OPPONENT </button>
 	</div>
-
-
 
 	<!-- Champion Select: 12 -->
 	<div class="row"> 
-		<div id="champBtn"></div>
+		<div id="champAvailable"></div>
 	</div>
 
 	<!-- Attack Button | Chosen Character | Opponent -->
 	<div class="row"> 
-		<button class="col-md-6 generalBtn" id="attBtn"> Attack Buttons </button>
+		<button class="col-md-6 styling" id="attBtn"> Attack Buttons </button>
 	</div>
 
 
