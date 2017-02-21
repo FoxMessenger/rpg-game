@@ -124,9 +124,7 @@ $(document).ready(function() {
         		attack: champInfo.data('attack')	
 			}; // -- END data .attr()
 
-
-
-			champSelection.append($(this).clone().addClass('clone').removeClass('hoverAnimation').removeClass('champFader'));
+			champSelection.append($(this).clone(true).addClass('clone').removeClass('hoverAnimation').removeClass('champFader'));
 			// I remove the id from the clone because I don't want it taking the effects of the original
 			// 'this' is equal to the #champAvailable, which contains the stored data of my champions
 			// .clone makes a new icon in the champion div
@@ -137,7 +135,6 @@ $(document).ready(function() {
 			$('#playerChamp').html(champSelection);															// this ports the cloned image to the html
 
 			$('#confirmChamp').fadeIn( 500 );																// fades in confirmChamp Button from champion onclick
-
 			$('#arenaChamp').html(																			// this will take my #arenaChamp space and port the following data information 	
 				`<p>${data.name}</p>
         		 <p>HP ${data.hp}</p>
@@ -160,10 +157,10 @@ $(document).ready(function() {
    			var data = {
        			name: champInfo.attr('id'),
         		hp: champInfo.data('hp'),
-        		attack: champInfo.data('attack')	
-			}; // -- END Enemy data .attr()
+        		attack: champInfo.data('attack')
 
-			champSelection.append($(this).clone().addClass('clone').removeClass('hoverAnimation').removeClass('enemyFader'));				
+			}; // -- END Enemy data .attr()
+			champSelection.append($(this).clone(true).addClass('clone').removeClass('hoverAnimation').removeClass('enemyFader'));				
 			// 'this' is equal to the #champAvailable, which contains the stored data of my champions
 			// .clone makes a new icon in the champion div
 		 	// .addClass lets me adjust the clone to look different from the other champions icons
@@ -208,19 +205,30 @@ $(document).ready(function() {
 			$('.enemyFader').remove();
 			$(this).hide( );														// fades in confirmChamp Button from champion onclick
 			$("#attBtn").fadeIn( 500 );
-			console.log("You've Selected an Opponent!");
-			var combat = true;
+			
+			var Opponent = $(this)
+			console.log('Your Opponent Has been Selected!')
+			
+			$('#chooseChamp').hide();
+
+			combat = true;
+			console.log( 'Start Combat!' )
 		} // -- END enemyLocked statement
 	}); // End confirm Enemy
 
 
  	$('#attBtn').on('click', function(){
- 		if (combat === true) {
- 			
- 		}; // -- END Combat
+ 		if ( !combat ) {
+ 			console.log('Please choose an opponent')
+ 		} else if ( combat === true ){
+ 			console.log($("data.name"))
+ 		} // -- END Combat
 	 }); // -- END onClick
 	
 }); // -- End Code
+
+
+
 
 	// var currentPlayerHealth = player.health;
 	// var currentEnemyHealth = enemy.health;
@@ -231,19 +239,19 @@ $(document).ready(function() {
 
 		// Combat Pseudo Code: champ vs opponent
 		
-		// $("#attBtn").on("click", function(event) {
+		// $('#attBtn').on('click', function(event) {
 		// 	if (player.attPower < enemy.hitPoints) {
 		// 			enemy.hitPoints -= player.attPower;
 					// store current hp
 		// 			// run function (attPower + 20)
 		// 	}  if else (player.attPower === enemy.hitPoints || player.attPower > enemy.hitPoints) {
 		// 			// run function (attPower + 20)
-		// 			// in the arena display "Victory!"
+		// 			// in the arena display 'Victory!'
 					// var wins += 1;
 		// 			// end attack combat
 		// 	} 
 		// if (wins === 3) {
-					// in the area display "You Win!"
+					// in the area display 'You Win!'
 		//  }
 
 		// 	// run function enemy attack phase
