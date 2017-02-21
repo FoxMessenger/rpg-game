@@ -19,12 +19,17 @@
 
 .stylingChoose {
 	background-color: #2e2e2e;
-	color: tomato; 
+	color: aqua; 
 	border-style: solid;
 	border-radius: 5px;
 	text-align: center;
 	font-size: 20px;
 	margin-bottom: 10px; 
+}
+
+/* added class from Javascript */
+.chooseEnemy {
+	color: tomato; 
 }
 
 .selectButton { margin: 5px auto; ; }
@@ -42,23 +47,44 @@
 	opacity: 0.80;						/* keeping all icons slighty off of opacity:; 1 */
 }
 
-.clone { opacity: 1; } 					/* this is the opacity state of the clone */
+.clone { opacity: 1; width: 100%;} 					/* this is the opacity state of the clone */
 	
+	/* attack button */
 #attBtn { 
 	background-color: tomato;
-	margin: 5px auto; 
-	width: 100%;} 			/* attack button */
+	margin: auto; 
+	width: 30%;
+} 			
+
+#attBtn:hover { 
+	opacity: .70;
+	transition: 1s all ease;			/* animation speed */
+}
 
 #playerChamp,
 #OppChamp { 
 	border-style: solid; 
+	width: 50%;
 	/*float: left;*/
 }
-/*
 
-.hidden { display:none; }
+#OppChamp { float: right; }
 
-.unhidden{ display:block; }
-*/
+#confirmChamp,
+#confirmEnemy {
+	width: 50%;
+}
+#confirmEnemy {
+	float: right;
+	width: 50%;
+}
+#confirmChamp:hover {
+	opacity: .5;
+	transition: 0.5s all ease;			/* animation speed */
+}
 
+#confirmEnemy:hover {
+	opacity: .5;
+	transition: 0.5s all ease;			/* animation speed */
+}
 

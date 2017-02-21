@@ -14,7 +14,7 @@
 	</script>
 
 	<!-- linking my Javascript -->
-	<script type="text/javascript" src="assets/javascript/rpg.js"></script>
+	<script type="text/javascript" src="assets/javascript/rpg-test.js"></script>
 </head>
 
  	<!-- We'll need 6 Rows but only 2 columns to begin this -->
@@ -26,39 +26,41 @@
 		<div class="navbar navbar-default"><h2> Text Based Fighting Game </h2></div>
 	</div>
 	
+	<!-- Selected Champs appear here -->
+	<div class="row">
+		<div class="col-md-6 stylingSelect" id="playerChamp">  </div>
+		<div class="col-md-6 stylingSelect" id="OppChamp">  </div>
+	</div>
+	
+	<!-- Attack Button | Chosen Character | Opponent -->
+	<div class="row"> 
+		<button class="styling" id="attBtn"> Attack Button </button>
+	</div>
+
 	<!-- Confirm champ button appears here -->
 	<div class="row">
 		<button class="col-md-6 styling selectButton" id="confirmChamp"> Confirm Champion </button>
 
 		<button class="col-md-6 styling selectButton" id="confirmEnemy"> Confirm Opponent </button>
 	</div>
-	
-	<!-- Selected Champs appear here -->
-	<div class="row">
-		<div class="col-md-6 stylingSelect" id="playerChamp">  </div>
-		<div class="col-md-6 stylingSelect" id="OppChamp">  </div>
-	</div>
 
 	<!-- Arena Space: where the combat data will go -->
 	<div class="row">
-		<div class="styling" id="arena"> ARENA </div>	
+		<div class="col-md-6 styling" id="arenaChamp"> ARENA </div>	
+		<div class="col-md-6 styling" id="arenaEnemy"> ARENA </div>	
 	</div>
 
 	<!-- Champion Select: 12 -->
-
+	<hr></hr>
 	<div class="row">
-		<div class="col-md-12 stylingChoose"> Choose your Character</div>
+		<div class="col-md-12 stylingChoose chooseChamp" id="chooseChamp"> Choose your Champion</div>
 	</div>
 
 	
 	<div class="row"> 
 		<div class="col-md-12" id="champAvailable"></div>
 	</div>
-
-	<!-- Attack Button | Chosen Character | Opponent -->
-	<div class="row"> 
-		<button class="col-md-12 styling" id="attBtn"> Attack Button </button>
-	</div>
+	<hr></hr>
 
 
 </body>
