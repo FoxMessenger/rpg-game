@@ -67,7 +67,7 @@ $(document).ready(function() {
 
 		// --- A function that contains the specific stats of the champ --- //
 
-	var champStats = function (name, hitPoints, attPower, icon /*, armor */) {
+	var champStats = function (name, hitPoints, attPower, icon, hit) {
 		this.name = name;
 		this.hitPoints = hitPoints;
 		this.attPower = attPower;
@@ -80,18 +80,18 @@ $(document).ready(function() {
 		// --- all playable champions available --- //
 
 	var champions = [ 
-		new champStats('Kali', 3300, 170, '<img src="assets/images/2078.png">' /*, 35 */),
-		new champStats('Super Girl', 3300, 110, '<img src="assets/images/1678.png">' /*, 52 */), 
-		new champStats('Kanna', 4000, 165, '<img src="assets/images/2534.png">'/*, 40 */), 
+		new champStats('Hera', 3300, 170, '<img src="assets/images/2078.png">' /*, 35 */),
+		new champStats('Super Girl', 3300, 110, '<img src="assets/images/1678.png">', '<img src="assets/images/1678-hit.png">'), 
+		new champStats('Aphrodite', 4000, 165, '<img src="assets/images/2534.png">'/*, 40 */), 
 		new champStats('Sasha', 3500, 120, '<img src="assets/images/2372.png">'/*, 15 */), 
-		new champStats('Ilmina', 4200, 220, '<img src="assets/images/3274.png">'/*, 12 */), 
-		new champStats('Typhon', 3800, 155, '<img src="assets/images/1949.png">'/*, 28 */), 
+		new champStats('Artemis', 4200, 220, '<img src="assets/images/3274.png">'/*, 12 */), 
+		new champStats('Hades', 3800, 155, '<img src="assets/images/1949.png">'/*, 28 */), 
 		new champStats('Sephiroth', 3200, 200, '<img src="assets/images/2032.png">'/*, 6 */), 
-		new champStats('Vishnu', 3650, 195, '<img src="assets/images/2081.png">'/*, 30 */), 
-		new champStats('Psychopomp', 3500, 215, '<img src="assets/images/3285.png">' /*, 6 */), 
+		new champStats('Ares', 3650, 195, '<img src="assets/images/2081.png">'/*, 30 */), 
+		new champStats('Athena', 3500, 215, '<img src="assets/images/3285.png">' /*, 6 */), 
 		new champStats('Rei', 4200, 175, '<img src="assets/images/3393.png">' /*, 52 */), 
 		new champStats('Asuka', 3600, 185, '<img src="assets/images/3396.png">' /*, 13 */), 
-		new champStats('Archer', 5000, 95, '<img src="assets/images/851.png">' /*, 70 */)
+		new champStats('Zues', 5000, 95, '<img src="assets/images/851.png">' /*, 70 */)
 	]; // -- END champions
 
 
@@ -106,6 +106,7 @@ $(document).ready(function() {
 			champAvailable.attr('data-hp', champions[i].hitPoints);					// adding the data for hp 
 			champAvailable.attr('data-attack', champions[i].attPower);				// adding the data for attack power 
 			champAvailable.attr('data-icon', champions[i].icon);					// adding the data for picture 
+			champAvailable.attr('data-hit', champions[i].hit);						// adding the data for hit animation 
 			champAvailable.html(champions[i].icon);									// porting the image to the html
 			$('#champAvailable').append(champAvailable);							// checking the html for the id 'champAvailable' and appending my champAvailable variable to it
 		}; // --END for Loops
@@ -161,7 +162,7 @@ $(document).ready(function() {
 				} // -- END champLocked statemenet
 
 				$('#chooseChamp').addClass('chooseEnemy');
-				$('#chooseChamp').html('Choose your Opponent');
+				$('#chooseChamp').html('CHOOSE YOUR FOE');
 				$(this).fadeOut( 400 );													// fades in confirmChamp Button from champion onclick
 				console.log("You've Selected " + playerChamp.name);
 			}); // End confirm champ
@@ -236,16 +237,23 @@ $(document).ready(function() {
 	// --- COMBAT --- //
 
  	$('#attBtn').on('click', function(){
+ 		$('#damageUpdate').show();
+ 		var timeoutID;
+
+		// $(this).find('/image/1678-hit.png').toggle();
+
  		if ( !combat ) {
  			console.log('Please choose an opponent')
  		} else if ( combat === true ){
  			if (playerChamp.attack < enemyChamp.hp) {
-
+ 				if (enemyChamp.attack > playerChamp.hp) {
+ 					
+ 				}
 					enemyChamp.hp -= playerChamp.attack;
-					console.log("You hit for " + playerChamp.attack);
+					$('#damageUpdate').prepend("You hit for " + playerChamp.attack + "<p>" + "<hr>");
 
 					playerChamp.hp -= enemyChamp.attack;
-					console.log(enemyChamp.name + " Hit back for: " + enemyChamp.attack);
+
 					$(arenaEnemy).html(
 						`<p>${enemyChamp.name}</p>
         		 		 <p>HP ${enemyChamp.hp}</p>
@@ -259,10 +267,12 @@ $(document).ready(function() {
     				);
 
 					console.log("Your HP: " + playerChamp.hp);
-					playerChamp.attack += 75;
+					playerChamp.attack += 25;
 							$('#damageUpdate').show();
+					$('#damageUpdate').prepend(enemyChamp.name + " Hit back for: " + enemyChamp.attack + "<p>" +  "<hr>");
+
 			 } else if (playerChamp.attack === enemyChamp.hp || playerChamp.attack > enemyChamp.hp) {
-					playerChamp.attack += 75;
+					playerChamp.attack += 25;
 					$('#damageUpdate').html('Victory! ');
 					wins += 1;
 

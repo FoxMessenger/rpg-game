@@ -1,35 +1,42 @@
 /* base visual */ 
+body {
+	background-image: url("../images/background.jpg");
+}
 
-.navbar {text-align: center;}
+.championSelect {
+	margin: 0px auto;
+	width: 50%;
+	/*display: inline-block;*/
+}
+.navbar { text-align: center; }
+
 .styling {
 	background-color: #2e2e2e;
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; /* best hipster font type */
 	color: white; 
-	border-style: solid;
 	border-radius: 5px;
 	text-align: center;
 	font-size: 20px; 
 }
 
 .stylingSelect {
-	background-color: white;
+	/*background-color: white;*/
 	color: white; 
 	padding: 20px;
 }
 
 .stylingChoose {
-	background-color: #2e2e2e;
-	color: aqua; 
-	border-style: solid;
+	/*background-color: #2e2e2e;*/
+	color: white; 
 	border-radius: 5px;
 	text-align: center;
-	font-size: 20px;
+	font-size: 50px;
 	margin-bottom: 10px; 
 }
 
 /* added class from Javascript */
 .chooseEnemy {
-	color: tomato; 
+	color: white; 
 }
 
 .selectButton { margin: 5px auto; ; }
@@ -53,7 +60,7 @@
 #attBtn { 
 	background-color: tomato;
 	margin: auto; 
-	width: 30%;
+	width: 50%;
 } 			
 
 #attBtn:hover { 
@@ -63,7 +70,7 @@
 
 #playerChamp,
 #enemyChamp { 
-	border-style: solid; 
+	/*border-style: solid; */
 	width: 50%;
 	/*float: left;*/
 }
@@ -88,3 +95,8 @@
 	transition: 0.5s all ease;			/* animation speed */
 }
 
+#damageUpdate {
+	color: black
+	border-style: solid;
+	background-color: white;
+}
