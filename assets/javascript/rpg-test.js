@@ -28,6 +28,7 @@ $(document).ready(function() {
 	$("#confirmChamp").hide();
     $("#confirmEnemy").hide();
     $("#attBtn").hide();
+    $("#damageUpdate").hide();
 
 	// these are the variables I believe I need
 
@@ -54,7 +55,7 @@ $(document).ready(function() {
 	var armor;							// champ armor
 
 	var victory;						// if you win 1 match
-	var win;							// if you win 5 matches
+	var wins;							// if you win 5 matches
 	var defeat;							// if you lose 1 match
 
 	var attack = function(){};			// function attack button ---> the game asks that the attackPower increases every time you attack.
@@ -127,7 +128,7 @@ $(document).ready(function() {
         		attack: champInfo.data('attack')	
 			}; // -- END data .attr()
 
-			var playerChamp = data;
+			playerChamp = data;
 
 			champSelection.append($(this).clone(true).addClass('clone').removeClass('hoverAnimation').removeClass('champFader'));
 			// I remove the id from the clone because I don't want it taking the effects of the original
@@ -163,7 +164,6 @@ $(document).ready(function() {
 				$('#chooseChamp').html('Choose your Opponent');
 				$(this).fadeOut( 400 );													// fades in confirmChamp Button from champion onclick
 				console.log("You've Selected " + playerChamp.name);
-			
 			}); // End confirm champ
 
     	} // -- champLocked: If-statement
@@ -188,9 +188,7 @@ $(document).ready(function() {
 
 			}; // -- END Enemy data .attr()
 			
-			var enemyChamp = data;
-			
-			console.log(enemyChamp.name + " " +  enemyChamp.attack + " " + enemyChamp.hp);
+			enemyChamp = data;
 			
 			champSelection.append($(this).clone(true).addClass('clone').removeClass('hoverAnimation').removeClass('enemyFader'));				
 			// 'this' is equal to the #champAvailable, which contains the stored data of my champions
@@ -241,22 +239,47 @@ $(document).ready(function() {
  		if ( !combat ) {
  			console.log('Please choose an opponent')
  		} else if ( combat === true ){
- 			console.log("ATTACK!!");
- 			if (playerChamp.attack < enemyChamp.hitPoints) {
-					$(enemyChamp.hitPoints) -= $(playerChamp.attPower);
-					console.log("you successfully attacked");
-							$('#chooseChamp').show();
-					pla (attPower + 20)
-			 } // else if (player.attPower === enemy.hitPoints || player.attPower > enemy.hitPoints) {
-			// 		// run function (attPower + 20)
-			// 		$('#chooseChamp').html('Victory!');
-			
-			// 		wins += 1;
-			// }
+ 			if (playerChamp.attack < enemyChamp.hp) {
+
+					enemyChamp.hp -= playerChamp.attack;
+					console.log("You hit for " + playerChamp.attack);
+
+					playerChamp.hp -= enemyChamp.attack;
+					console.log(enemyChamp.name + " Hit back for: " + enemyChamp.attack);
+					$(arenaEnemy).html(
+						`<p>${enemyChamp.name}</p>
+        		 		 <p>HP ${enemyChamp.hp}</p>
+        		 		 <p>attack ${enemyChamp.attack}</p>`																						
+    				);
+					
+					$(arenaChamp).html(
+						`<p>${playerChamp.name}</p>
+        		 		 <p>HP ${playerChamp.hp}</p>
+        		 		 <p>attack ${playerChamp.attack}</p>`																						
+    				);
+
+					console.log("Your HP: " + playerChamp.hp);
+					playerChamp.attack += 75;
+							$('#damageUpdate').show();
+			 } else if (playerChamp.attack === enemyChamp.hp || playerChamp.attack > enemyChamp.hp) {
+					playerChamp.attack += 75;
+					$('#damageUpdate').html('Victory! ');
+					wins += 1;
+
+					$('#damageUpdate').append("Wins: " + wins);
+					combat = false;
+					if (wins === 3) {
+						console.log ("You Win!")
+					} else { 
+						enemyLocked = false;
+						combat = false;
+					}
+			}
 					// end attack combat
  		} // -- END Combat
 	 }); // -- END onClick
 	
+	wins = 0;
 }); // -- End Code
 
 
