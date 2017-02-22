@@ -62,13 +62,13 @@
 }
 
 #playerChamp,
-#OppChamp { 
+#enemyChamp { 
 	border-style: solid; 
 	width: 50%;
 	/*float: left;*/
 }
 
-#OppChamp { float: right; }
+#enemyChamp { float: right; }
 
 #confirmChamp,
 #confirmEnemy {

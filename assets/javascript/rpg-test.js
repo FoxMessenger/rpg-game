@@ -31,12 +31,16 @@ $(document).ready(function() {
 
 	// these are the variables I believe I need
 
-	var player;							// YOUR character - this will take the champAvailable function and set it as player - then has that value set to null so the it's not reselectable
-	
-	var enemy;							// once your character is chosen now it's the choosing opponent phase - this will take the champAvailable function, minus the var Player choice
-	
-	var champLocked = false;				// locking your champ in
-	var enemyLocked = false;				// same as above, but for the opponent
+	var playerChamp;					// YOUR character - this will take the champAvailable function and set it as player - then has that value set to null so the it's not reselectable
+	var playerHP;
+	var playerCurrentHP
+
+	var enemyChamp;						// once your character is chosen now it's the choosing opponent phase - this will take the champAvailable function, minus the var Player choice
+	var enemyHP;
+	var enemyCurrentHP;
+
+	var champLocked = false;			// locking your champ in
+	var enemyLocked = false;			// same as above, but for the opponent
 
 	var gameState;						// create an object that stores information about the game state - this will be the state of continues, play again, game over, etc.
 
@@ -104,7 +108,6 @@ $(document).ready(function() {
 			champAvailable.html(champions[i].icon);									// porting the image to the html
 			$('#champAvailable').append(champAvailable);							// checking the html for the id 'champAvailable' and appending my champAvailable variable to it
 		}; // --END for Loops
-
 	}); // - END champInfo
 
 
@@ -112,7 +115,7 @@ $(document).ready(function() {
 		// -- Champ Select Space -- //
 
 	$('.champ').on('click', function(event){										// adding the champ to the selected champ section (this section is different from the space with all the champs)
-		
+			
 		if (champLocked === false) {
 			var champSelection = $('<div>');										// deciding that I will make the section a new Div
 			$('.champFader').not(this).removeClass('champFader');
@@ -124,6 +127,8 @@ $(document).ready(function() {
         		attack: champInfo.data('attack')	
 			}; // -- END data .attr()
 
+			var playerChamp = data;
+
 			champSelection.append($(this).clone(true).addClass('clone').removeClass('hoverAnimation').removeClass('champFader'));
 			// I remove the id from the clone because I don't want it taking the effects of the original
 			// 'this' is equal to the #champAvailable, which contains the stored data of my champions
@@ -131,16 +136,38 @@ $(document).ready(function() {
 	 		// .addClass lets me adjust the clone to look different from the other champions icons
 			// .removeClass removes the hover animation from the clone
 			// without .clone() the image will delete its original position and move it to the champ selection space
-		
+			
 			$('#playerChamp').html(champSelection);															// this ports the cloned image to the html
-
+			
+			console.log(playerChamp.name);
+			
 			$('#confirmChamp').fadeIn( 500 );																// fades in confirmChamp Button from champion onclick
 			$('#arenaChamp').html(																			// this will take my #arenaChamp space and port the following data information 	
 				`<p>${data.name}</p>
         		 <p>HP ${data.hp}</p>
         		 <p>attack ${data.attack}</p>`																						
     			); // -- END data collection
+
+			// -- confirming your Champion --//
+
+			$('#confirmChamp').on('click', function() {
+				if(!champLocked) {
+					champLocked = true;
+					$('.champFader').fadeTo( "slow" , 0.5, function(){
+						$(this).prop('onclick',null).off('click');
+						// animation complete
+					}); // -- END champFader animation
+				} // -- END champLocked statemenet
+
+				$('#chooseChamp').addClass('chooseEnemy');
+				$('#chooseChamp').html('Choose your Opponent');
+				$(this).fadeOut( 400 );													// fades in confirmChamp Button from champion onclick
+				console.log("You've Selected " + playerChamp.name);
+			
+			}); // End confirm champ
+
     	} // -- champLocked: If-statement
+
 	}); // -- END onClick Champ Selection
 
 
@@ -160,6 +187,11 @@ $(document).ready(function() {
         		attack: champInfo.data('attack')
 
 			}; // -- END Enemy data .attr()
+			
+			var enemyChamp = data;
+			
+			console.log(enemyChamp.name + " " +  enemyChamp.attack + " " + enemyChamp.hp);
+			
 			champSelection.append($(this).clone(true).addClass('clone').removeClass('hoverAnimation').removeClass('enemyFader'));				
 			// 'this' is equal to the #champAvailable, which contains the stored data of my champions
 			// .clone makes a new icon in the champion div
@@ -167,7 +199,10 @@ $(document).ready(function() {
 			// .removeClass removes the hover animation from the clone
 			// without .clone() the image will delete its original position and move it to the champ selection space
 
-			$('#OppChamp').html(champSelection);															// this ports the cloned image to the html
+			
+			
+			$('#enemyChamp').html(champSelection);															// this ports the cloned image to the html
+			
 			$('#confirmEnemy').fadeIn( 400 );																// fades in confirmChamp Button from champion onclick
 
 			$('#arenaEnemy').html(																			// this will take my #arenaChamp space and port the following data information 	
@@ -175,53 +210,50 @@ $(document).ready(function() {
         		 <p>HP ${data.hp}</p>
         		 <p>attack ${data.attack}</p>`																						
     			); // -- END data collection
+			
+
+
+    	// -- confirming your Enemy/Opponent  --//
+
+			$('#confirmEnemy').on('click', function() {
+				if (!enemyLocked) {
+					enemyLocked = true;
+					$('.enemyFader').remove();
+					$(this).hide( );														// fades in confirmChamp Button from champion onclick
+					$("#attBtn").fadeIn( 500 );
+			
+					console.log('Your Opponent is ' + enemyChamp.name);
+				
+					$('#chooseChamp').hide();
+
+					combat = true;
+					console.log( 'Prepare for Combat!' );
+				} // -- END enemyLocked statement
+			}); // End confirm Enemy
     	} //-- END champLocked if statement
+
 	}); // -- END Opponent Select Space -- //
 
 
-
-	// -- confirming your Champion --//
-	$('#confirmChamp').on('click', function() {
-		if(!champLocked) {
-			champLocked = true;
-			$('.champFader').fadeTo( "slow" , 0.5, function(){
-				$(this).prop('onclick',null).off('click');
-				// animation complete
-			}); // -- END champFader animation
-		} // -- END champLocked statemenet
-
-			$('#chooseChamp').addClass('chooseEnemy');
-			$('#chooseChamp').html('Choose your Opponent');
-			$(this).fadeOut( 400 );													// fades in confirmChamp Button from champion onclick
-			console.log("You've Selected a champ!");
-	}); // End confirm champ
-
-
-
-	// -- confirming your Enemy  --//
-	$('#confirmEnemy').on('click', function() {
-		if (!enemyLocked) {
-			enemyLocked = true;
-			$('.enemyFader').remove();
-			$(this).hide( );														// fades in confirmChamp Button from champion onclick
-			$("#attBtn").fadeIn( 500 );
-			
-			var Opponent = $(this)
-			console.log('Your Opponent Has been Selected!')
-			
-			$('#chooseChamp').hide();
-
-			combat = true;
-			console.log( 'Start Combat!' )
-		} // -- END enemyLocked statement
-	}); // End confirm Enemy
-
+	// --- COMBAT --- //
 
  	$('#attBtn').on('click', function(){
  		if ( !combat ) {
  			console.log('Please choose an opponent')
  		} else if ( combat === true ){
- 			console.log($("data.name"))
+ 			console.log("ATTACK!!");
+ 			if (playerChamp.attack < enemyChamp.hitPoints) {
+					$(enemyChamp.hitPoints) -= $(playerChamp.attPower);
+					console.log("you successfully attacked");
+							$('#chooseChamp').show();
+					pla (attPower + 20)
+			 } // else if (player.attPower === enemy.hitPoints || player.attPower > enemy.hitPoints) {
+			// 		// run function (attPower + 20)
+			// 		$('#chooseChamp').html('Victory!');
+			
+			// 		wins += 1;
+			// }
+					// end attack combat
  		} // -- END Combat
 	 }); // -- END onClick
 	
@@ -240,15 +272,7 @@ $(document).ready(function() {
 		// Combat Pseudo Code: champ vs opponent
 		
 		// $('#attBtn').on('click', function(event) {
-		// 	if (player.attPower < enemy.hitPoints) {
-		// 			enemy.hitPoints -= player.attPower;
-					// store current hp
-		// 			// run function (attPower + 20)
-		// 	}  if else (player.attPower === enemy.hitPoints || player.attPower > enemy.hitPoints) {
-		// 			// run function (attPower + 20)
-		// 			// in the arena display 'Victory!'
-					// var wins += 1;
-		// 			// end attack combat
+		// 	
 		// 	} 
 		// if (wins === 3) {
 					// in the area display 'You Win!'
