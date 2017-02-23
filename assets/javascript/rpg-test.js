@@ -68,15 +68,15 @@ $(document).ready(function() {
 	var champions = [ 
 		new champStats('Hera', 3300, 170, '<img src="assets/images/2078.png">' /*, 35 */),
 		new champStats('Super Girl', 3300, 110, '<img src="assets/images/1678.png">', '<img src="assets/images/1678-hit.png">'), 
-		new champStats('Aphrodite', 4000, 165, '<img src="assets/images/2534.png">'/*, 40 */), 
+		// new champStats('Aphrodite', 4000, 165, '<img src="assets/images/2534.png">'/*, 40 */), 
 		new champStats('Sasha', 3500, 120, '<img src="assets/images/2372.png">'/*, 15 */), 
 		// new champStats('Artemis', 4200, 220, '<img src="assets/images/3274.png">'/*, 12 */), 
-		// new champStats('Hades', 3800, 155, '<img src="assets/images/1949.png">'/*, 28 */), 
-		// new champStats('Sephiroth', 3200, 200, '<img src="assets/images/2032.png">'/*, 6 */), 
-		// new champStats('Ares', 3650, 195, '<img src="assets/images/2081.png">'/*, 30 */), 
+		new champStats('Hades', 3800, 155, '<img src="assets/images/1949.png">'/*, 28 */), 
+		new champStats('Sephiroth', 3200, 200, '<img src="assets/images/2032.png">'/*, 6 */), 
+		new champStats('Ares', 3650, 195, '<img src="assets/images/2081.png">'/*, 30 */), 
 		// new champStats('Athena', 3500, 215, '<img src="assets/images/3285.png">' /*, 6 */), 
-		// new champStats('Rei', 4200, 175, '<img src="assets/images/3393.png">' /*, 52 */), 
-		// new champStats('Asuka', 3600, 185, '<img src="assets/images/3396.png">' /*, 13 */), 
+		new champStats('Rei', 4200, 175, '<img src="assets/images/3393.png">' /*, 52 */), 
+		new champStats('Asuka', 3600, 185, '<img src="assets/images/3396.png">' /*, 13 */), 
 		// new champStats('Zues', 5000, 95, '<img src="assets/images/851.png">' /*, 70 */)
 	]; // -- END champions
 
@@ -105,14 +105,15 @@ $(document).ready(function() {
 	$('.champ').on('click', function(event){										// adding the champ to the selected champ section (this section is different from the space with all the champs)
 			
 		if (champLocked === false) {
-			champSelection = $('<div>');										// deciding that I will make the section a new Div
+			champSelection = $('<div>');											// deciding that I will make the section a new Div
 			$('.champFader').not(this).removeClass('champFader');
 			$(this).addClass('champFader');											// adding an ID can only be added to 1 element, so the last element you picked will have this ID and no other
-			champInfo = $(this);												// champInfo is now equal to this (which is champAvailable I believe). ChampInfo now can have object attributes of .name .hp and .attack, because I named them earlier with data-hp, data-name, etc. 
+			champInfo = $(this);													// champInfo is now equal to this (which is champAvailable I believe). ChampInfo now can have object attributes of .name .hp and .attack, because I named them earlier with data-hp, data-name, etc. 
    			var data = {
        			name: champInfo.attr('id'),
         		hp: champInfo.data('hp'),
-        		attack: champInfo.data('attack')	
+        		attack: champInfo.data('attack'),
+        		hit: champInfo.data('hit')
 			}; // -- END data .attr()
 
 			playerChamp = data;
@@ -164,7 +165,7 @@ $(document).ready(function() {
 	$('.champ').on('click', function(event){										// adding the champ to the selected champ section (this section is different from the space with all the champs)
 		if (champLocked === true && enemyLocked === false) {
 			
-			var champSelection = $('<div>');										// deciding that I will make the section a new Div
+			champSelection = $('<div>');										// deciding that I will make the section a new Div
 			$('.enemyFader').not(this).removeClass('enemyFader');
 			$(this).addClass('enemyFader');												// adding an ID can only be added to 1 element, so the last element you picked will have this ID and no other
 			champInfo = $(this);												// champInfo is now equal to this (which is champAvailable I believe). ChampInfo now can have object attributes of .name .hp and .attack, because I named them earlier with data-hp, data-name, etc. 
@@ -221,6 +222,8 @@ $(document).ready(function() {
 	// --- COMBAT --- //
 
  	$('#attBtn').on('click', function(event){
+	
+		$('#playerChamp').html(playerChamp.hit);
 
  		$('#damageUpdate').show();
 
