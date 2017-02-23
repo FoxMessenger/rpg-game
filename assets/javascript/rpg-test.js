@@ -1,14 +1,7 @@
 // ** 					NOTES					** //
 
-	// key: element means: p, div, img, etc.
 	//	.animate 			can be used to resize, move, or change opacity among aother things 				// example: $("element"/".class"/"#id").animate({opacity: "0.05"})
-	//	.addClass			adds a addClass													 				// example: $("element"/".class"/"#id").addClass("class-name")
-	//	.removeClass		removes a class
-	//	.on("click")		you can click a button
-	//	.attr 				adds an attribute
-
-	// $(document).ready(function(){})
-
+	
 	//	TEST AFTER EACH POINT TO SEE IF IT IS ALL WORKING
 	//	check HTML
 	//	setup environment: empty divs, script<javascript>
@@ -25,16 +18,10 @@
 $(document).ready(function() {
 	
 	// First I want to hide these buttons, until I call them
-	$("#confirmChamp").hide();
-    $("#confirmEnemy").hide();
-    $("#attBtn").hide();
-    $("#damageUpdate").hide();
 
 	// these are the variables I believe I need
 
 	var playerChamp;					// YOUR character - this will take the champAvailable function and set it as player - then has that value set to null so the it's not reselectable
-	var playerHP;
-	var playerCurrentHP
 	var enemyChamp;						// once your character is chosen now it's the choosing opponent phase - this will take the champAvailable function, minus the var Player choice
 	var enemyHP;
 	var enemyCurrentHP;
@@ -48,9 +35,11 @@ $(document).ready(function() {
 	var victory;						// if you win 1 match
 	var wins;							// if you win 5 matches
 	var defeat;							// if you lose 1 match
+	var punch1 = new Audio("assets/audio/punch1.mp3");
+	var punch2 = new Audio("assets/audio/punch2.mp3");
+	var slap1 = new Audio("https://p.scdn.co/mp3-preview/ed5a443bc86176135ebca8a114f66f4d814d4c90");
 
-
-		// --- A function that contains the specific stats of the champ --- //
+	// --- A function that contains the specific stats of the champ --- //
 
 	var champStats = function (name, hitPoints, attPower, icon, hit) {
 		this.name = name;
@@ -63,26 +52,33 @@ $(document).ready(function() {
 
 
 
-		// --- all playable champions available --- //
+	// --- all playable champions available --- //
 
 	var champions = [ 
-		new champStats('Hera', 3300, 170, '<img src="assets/images/2078.png">' /*, 35 */),
-		new champStats('Super Girl', 3300, 110, '<img src="assets/images/1678.png">', '<img src="assets/images/1678-hit.png">'), 
+		new champStats('Hera', 3300, 170, '<img src="assets/images/2078.png">', '<img src="assets/images/2078-hit.png">'),
+		new champStats('SuperGirl', 3300, 110, '<img src="assets/images/1678.png">', '<img src="assets/images/1678-hit.png">'), 
 		// new champStats('Aphrodite', 4000, 165, '<img src="assets/images/2534.png">'/*, 40 */), 
-		new champStats('Sasha', 3500, 120, '<img src="assets/images/2372.png">'/*, 15 */), 
+		new champStats('Sasha', 3500, 120, '<img src="assets/images/2372.png">', '<img src="assets/images/2372-hit.png">'/*, 15 */), 
 		// new champStats('Artemis', 4200, 220, '<img src="assets/images/3274.png">'/*, 12 */), 
-		new champStats('Hades', 3800, 155, '<img src="assets/images/1949.png">'/*, 28 */), 
-		new champStats('Sephiroth', 3200, 200, '<img src="assets/images/2032.png">'/*, 6 */), 
-		new champStats('Ares', 3650, 195, '<img src="assets/images/2081.png">'/*, 30 */), 
+		new champStats('Hades', 3800, 155, '<img src="assets/images/1949.png">', '<img src="assets/images/1949-hit.png">'), 
+		new champStats('Sephiroth', 3200, 200, '<img src="assets/images/2032.png">', '<img src="assets/images/2032-hit.png">'), 
+		new champStats('Ares', 3650, 195, '<img src="assets/images/2081.png">', '<img src="assets/images/2081-hit.png">'/*, 30 */), 
 		// new champStats('Athena', 3500, 215, '<img src="assets/images/3285.png">' /*, 6 */), 
-		new champStats('Rei', 4200, 175, '<img src="assets/images/3393.png">' /*, 52 */), 
-		new champStats('Asuka', 3600, 185, '<img src="assets/images/3396.png">' /*, 13 */), 
+		new champStats('Rei', 4200, 175, '<img src="assets/images/3393.png">', '<img src="assets/images/3393-hit.png">'), 
+		new champStats('Asuka', 3600, 185, '<img src="assets/images/3396.png">', '<img src="assets/images/3396-hit.png">'), 
 		// new champStats('Zues', 5000, 95, '<img src="assets/images/851.png">' /*, 70 */)
 	]; // -- END champions
 
 
 
-		// --- Player Select Space --- //
+	// --- Player Select Space --- //
+var gameStart = function() {
+	$("#confirmChamp").hide();
+    $("#confirmEnemy").hide();
+    $("#attBtn").hide();
+    $("#damageUpdate").hide();
+    $("arenaChamp").hide();
+    $("arenaEnemy").hide();
 
 	var champInfo = $('#champAvailable').each(function(){
 		for (var i = 0; i < champions.length; i++)	{								// the forLoop is to get all the characters in the object array on the screen.
@@ -100,7 +96,7 @@ $(document).ready(function() {
 
 
 		
-		// -- Champ Select Space -- //
+	// -- Champ Select Space -- //
 
 	$('.champ').on('click', function(event){										// adding the champ to the selected champ section (this section is different from the space with all the champs)
 			
@@ -113,12 +109,13 @@ $(document).ready(function() {
        			name: champInfo.attr('id'),
         		hp: champInfo.data('hp'),
         		attack: champInfo.data('attack'),
+        		icon: champInfo.data('icon'),
         		hit: champInfo.data('hit')
 			}; // -- END data .attr()
 
 			playerChamp = data;
 
-			champSelection.append($(this).clone(true).addClass('clone').removeClass('hoverAnimation').removeClass('champFader'));
+			champSelection.append($(this).clone(true).addClass('clone').removeClass('hoverAnimation').removeClass('champFader').prop('onclick',null).off('click'));
 			// I remove the id from the clone because I don't want it taking the effects of the original
 			// 'this' is equal to the #champAvailable, which contains the stored data of my champions
 			// .clone makes a new icon in the champion div
@@ -160,7 +157,7 @@ $(document).ready(function() {
 
 
 
-		// -- Opponent Select Space -- //
+	// -- Opponent Select Space -- //
 
 	$('.champ').on('click', function(event){										// adding the champ to the selected champ section (this section is different from the space with all the champs)
 		if (champLocked === true && enemyLocked === false) {
@@ -172,7 +169,9 @@ $(document).ready(function() {
    			var data = {
        			name: champInfo.attr('id'),
         		hp: champInfo.data('hp'),
-        		attack: champInfo.data('attack')
+        		icon: champInfo.data('icon'),
+        		attack: champInfo.data('attack'),
+        		hit: champInfo.data('hit')
 
 			}; // -- END Enemy data .attr()
 			
@@ -223,12 +222,34 @@ $(document).ready(function() {
 
  	$('#attBtn').on('click', function(event){
 	
-		$('#playerChamp').html(playerChamp.hit);
+		
+	var animation = function (){
+		$('#playerChamp').find('.champ').html(playerChamp.hit).removeClass('characterShake');
+		
+		setTimeout(function(){
+		
+			$('#playerChamp').find('.champ').addClass('characterShake').html(playerChamp.icon);
+			punch1.play();
+		
+		}, 300);
 
- 		$('#damageUpdate').show();
+		$('#enemyChamp').find('.champ').html(enemyChamp.hit).removeClass('characterShake');
+		
+		setTimeout(function(){
+		
+			$('#enemyChamp').find('.champ').addClass('characterShake').html(enemyChamp.icon);
+			if (playerChamp.attack === enemyChamp.hp || playerChamp.attack > enemyChamp.hp) {
+			} else {
+				punch2.play();
+			}
+		
+		}, 600);
+	}
+		
+		$('#damageUpdate').show();
 
-		// $(this).('/image/1678-hit.png').toggle();
-
+ 		animation();
+ 		
  		if ( !combat && playerChamp.hp > 0 ) { // if combat is false, have them choose another champ
 
  			$('#damageUpdate').html('Choose another opponent!');
@@ -261,7 +282,11 @@ $(document).ready(function() {
 
 					playerChamp.attack += 50;
 					$('#damageUpdate').show();
-					$('#damageUpdate').html(enemyChamp.name + " Hit back for: " + enemyChamp.attack + "<p>" +  "<hr>");
+					$('#damageUpdate').html(playerChamp.name + " You hit for  " + "<h1>" + playerChamp.attack + "<p>" +  "<hr>");
+					setTimeout(function(){
+						$('#damageUpdate').html(enemyChamp.name + " Hit back for " + "<h1>" + enemyChamp.attack + "<p>" +  "<hr>");
+					}, 600)
+					
 
 			} //--- END Champ.attack < Enemy.hp
 			  else if (enemyChamp.attack > playerChamp.hp || enemyChamp.attack === playerChamp.hp) {
@@ -273,6 +298,8 @@ $(document).ready(function() {
 
 			} else if (playerChamp.attack === enemyChamp.hp || playerChamp.attack > enemyChamp.hp) {
 					
+					$('#enemyChamp').find('.champ').addClass('enemyDead');
+
 					enemyChamp.hp = 0;
 					$('#arenaEnemy').html(
 					`	<p>${enemyChamp.name}</p>
@@ -301,12 +328,33 @@ $(document).ready(function() {
 			} else if (enemyChamp.attack > playerChamp.hp || enemyChamp.attack === playerChamp.hp ) { 
 			
 			} // end attack combat
- 		} // -- END Combat
+ 		
+ 		} // -- END COMBAT
+
 	 }); // -- END onClick
 	
+};
 	wins = 0;
 
-	// var reset.on('click', function(){} 
+	$('#reset').on('click', function(){
+			console.log('reset');
+			$( '#enemyChamp' ).empty();
+			$( '#playerChamp' ).empty();
+			$( '#confirmChamp' ).hide();
+			$( '#confirmEnemy' ).hide();
+			$( '#arenaChamp' ).empty();
+			$( '#arenaEnemy' ).empty();
+			$( '#champAvailable' ).empty();
+			combat = false;
+			champLocked = false;
+			enemyLocked = false;
+			$('#champAvailable').each(function(){})
+			gameStart();
+			
+	}) ;
+
+	gameStart();
+
 }); // -- End Code
 
 
