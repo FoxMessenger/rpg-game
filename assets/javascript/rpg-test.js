@@ -53,7 +53,7 @@ $(document).ready(function() {
 	function crit(){
 
 		var critHit = Math.ceil(Math.random() * 6);
-		console.log(critHit)
+		console.log('crit roll is: ' + critHit)
 		$('#damageUpdate').removeClass('healed');
 		$('#damageUpdate').removeClass('crit');
 		if (critHit === 5) {
@@ -77,7 +77,6 @@ $(document).ready(function() {
 		
 			}, 500);
 			clearTimeout(critHit)
-				console.log('sound played')
 		}
 		
 
@@ -99,17 +98,17 @@ $(document).ready(function() {
 	// --- all playable champions available --- //
 
 	var champions = [ 
-		new champStats('Hera', 1200, 270, '<img src="assets/images/2078.png">', '<img src="assets/images/2078-hit.png">'),
-		new champStats('SuperGirl', 2300, 210, '<img src="assets/images/1678.png">', '<img src="assets/images/1678-hit.png">'), 
-		// new champStats('Aphrodite', 4000, 165, '<img src="assets/images/2534.png">'/*, 40 */), 
+		new champStats('Hera', 1200, 300, '<img src="assets/images/2078.png">', '<img src="assets/images/2078-hit.png">'),
+		new champStats('SuperGirl', 2400, 190, '<img src="assets/images/1678.png">', '<img src="assets/images/1678-hit.png">'), 
+		new champStats('Aphrodite', 2000, 165, '<img src="assets/images/2534.png">', '<img src="assets/images/2534-hit.png">'/*, 40 */), 
 		new champStats('Sasha', 1500, 220, '<img src="assets/images/2372.png">', '<img src="assets/images/2372-hit.png">'/*, 15 */), 
-		// new champStats('Artemis', 4200, 220, '<img src="assets/images/3274.png">'/*, 12 */), 
+		// new champStats('Artemis', 2200, 180, '<img src="assets/images/3274.png">', '<img src="assets/images/3274-hit.png">'/*, 12 */), 
 		new champStats('Hades', 1800, 255, '<img src="assets/images/1949.png">', '<img src="assets/images/1949-hit.png">'), 
-		new champStats('Sephiroth', 1200, 300, '<img src="assets/images/2032.png">', '<img src="assets/images/2032-hit.png">'), 
+		new champStats('Sephiroth', 1100, 350, '<img src="assets/images/2032.png">', '<img src="assets/images/2032-hit.png">'), 
 		new champStats('Ares', 1650, 295, '<img src="assets/images/2081.png">', '<img src="assets/images/2081-hit.png">'/*, 30 */), 
-		// new champStats('Athena', 3500, 215, '<img src="assets/images/3285.png">' /*, 6 */), 
-		new champStats('Rei', 2200, 275, '<img src="assets/images/3393.png">', '<img src="assets/images/3393-hit.png">'), 
-		new champStats('Asuka', 1600, 285, '<img src="assets/images/3396.png">', '<img src="assets/images/3396-hit.png">'), 
+		// new champStats('Athena', 3500, 215, '<img src="assets/images/3285.png">', '<img src="assets/images/3285-hit.png">' /*, 6 */), 
+		new champStats('Rei', 2200, 145, '<img src="assets/images/3393.png">', '<img src="assets/images/3393-hit.png">'), 
+		new champStats('Asuka', 1600, 325, '<img src="assets/images/3396.png">', '<img src="assets/images/3396-hit.png">'), 
 		// new champStats('Zues', 5000, 95, '<img src="assets/images/851.png">' /*, 70 */)
 	]; // -- END champions
 
@@ -273,7 +272,7 @@ var gameStart = function() {
 			playSound();
 		
 		}, 300); 
-		console.log('sound played')
+		
 		
 		$('#enemyChamp').find('.champ').html(enemyChamp.hit).removeClass('characterShake');
 		setTimeout(function(){
@@ -283,7 +282,7 @@ var gameStart = function() {
 		
 		} else {
 				playSound();
-				console.log('sound played')
+				
 			}
 		}, 600);
 	}
@@ -370,10 +369,12 @@ var gameStart = function() {
 					playerChamp.attack += 105;
 					$('#damageUpdate').html( 'Victory! '	);
 					wins += 1;
+					console.log('Wins: ' + wins)
 
 					$("#attBtn").hide();
 
 					$('#damageUpdate').append('Wins: ' + wins + '.' + ' Choose a new Opponent');
+					$('#enemyChamp').find('.enemyDead').prop('onclick',null).off('click');
 					combat = false;
 
 					if (wins === 3) {
@@ -392,7 +393,6 @@ var gameStart = function() {
 	 }); // -- END onClick
 	
 };
-	wins = 0;
 
 	$('#reset').on('click', function(){
 			console.log('reset');
@@ -407,11 +407,13 @@ var gameStart = function() {
 			champLocked = false;
 			enemyLocked = false;
 			$('#champAvailable').each(function(){})
+			wins = 0;
 			gameStart();
 			
 	}) ;
 
 	gameStart();
+	wins = 0;
 
 }); // -- End Code
 
