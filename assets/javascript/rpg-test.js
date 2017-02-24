@@ -48,9 +48,9 @@ $(document).ready(function() {
 		var random = punch[Math.floor(Math.random() * punch.length)];
 		random.play();
 
-}
+	}
 
-function crit(){
+	function crit(){
 
 		var critHit = Math.ceil(Math.random() * 6);
 		console.log(critHit)
@@ -240,7 +240,7 @@ var gameStart = function() {
 			
 
 
-    	// -- confirming your Enemy/Opponent  --//
+    		// -- confirming your Enemy/Opponent  --//
 
 			$('#confirmEnemy').on('click', function() {
 				if (!enemyLocked) {
@@ -265,43 +265,37 @@ var gameStart = function() {
 	// --- COMBAT --- //
 
  	$('#attBtn').on('click', function(event){
-	
-		
-	var animation = function (){
+		var animation = function (){
 		$('#playerChamp').find('.champ').html(playerChamp.hit).removeClass('characterShake');
-		
 		setTimeout(function(){
-		
+
 			$('#playerChamp').find('.champ').addClass('characterShake').html(playerChamp.icon);
 			playSound();
 		
-		}, 300);
+		}, 300); 
 		console.log('sound played')
-
-		$('#enemyChamp').find('.champ').html(enemyChamp.hit).removeClass('characterShake');
 		
+		$('#enemyChamp').find('.champ').html(enemyChamp.hit).removeClass('characterShake');
 		setTimeout(function(){
 		
 			$('#enemyChamp').find('.champ').addClass('characterShake').html(enemyChamp.icon);
 			if (playerChamp.attack === enemyChamp.hp || playerChamp.attack > enemyChamp.hp) {
-			} else {
+		
+		} else {
 				playSound();
 				console.log('sound played')
 			}
-		
 		}, 600);
 	}
 		
 		$('#damageUpdate').show();
-
- 		animation();
+		animation();
 
  		///// COMBAT STARTS HERE //////
  		
  		if ( !combat && playerChamp.hp > 0 ) { // if combat is false, have them choose another champ
-
  			$('#damageUpdate').html('Choose another opponent!');
-
+ 		
  		} else if ( combat === true && playerChamp.hp <= 0) {
  					
  					$("#attBtn").hide();
@@ -361,7 +355,8 @@ var gameStart = function() {
 					combat = false;
 					
 
-			} else if (playerChamp.attack === enemyChamp.hp || playerChamp.attack > enemyChamp.hp) {
+			} //--- END enemyChamp.attack > playerChamp.hp
+			  else if (playerChamp.attack === enemyChamp.hp || playerChamp.attack > enemyChamp.hp) {
 					
 					$('#enemyChamp').find('.champ').addClass('enemyDead');
 
