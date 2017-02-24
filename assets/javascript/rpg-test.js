@@ -1,6 +1,6 @@
 // ** 					NOTES					** //
 
-	//	.animate 			can be used to resize, move, or change opacity among aother things 				// example: $("element"/".class"/"#id").animate({opacity: "0.05"})
+	//	.animate 			can be used to resize, move, or change opacity among aother things 				// example: $('element'/'.class'/'#id').animate({opacity: '0.05'})
 	
 	//	TEST AFTER EACH POINT TO SEE IF IT IS ALL WORKING
 	//	check HTML
@@ -35,11 +35,55 @@ $(document).ready(function() {
 	var victory;						// if you win 1 match
 	var wins;							// if you win 5 matches
 	var defeat;							// if you lose 1 match
-	var punch1 = new Audio("assets/audio/punch1.mp3");
-	var punch2 = new Audio("assets/audio/punch2.mp3");
-	var slap1 = new Audio("https://p.scdn.co/mp3-preview/ed5a443bc86176135ebca8a114f66f4d814d4c90");
+	
+	
+	
+	function playSound(){
+		var punch = [
+		new Audio('assets/audio/punch1.mp3'),
+		new Audio('assets/audio/slap1.mp3'),
+		new Audio('assets/audio/punch2.mp3')
+	]
 
+		var random = punch[Math.floor(Math.random() * punch.length)];
+		random.play();
+
+}
+
+function crit(){
+
+		var critHit = Math.ceil(Math.random() * 6);
+		console.log(critHit)
+		$('#damageUpdate').removeClass('healed');
+		$('#damageUpdate').removeClass('crit');
+		if (critHit === 5) {
+
+			console.log('crit!');
+			playerChamp.attack *= 50;
+			playerChamp.attack /= 50;
+			setTimeout(function(){
+		
+				$('#damageUpdate').html('+50 CRIT HIT!!!');
+		
+			}, 500);
+			clearTimeout(critHit)
+			
+		} else if (critHit === 3) {
+			console.log('healed!');
+			playerChamp.hp += 30;
+			setTimeout(function(){
+		
+				$('#damageUpdate').html('HEALED +30!');		
+		
+			}, 500);
+			clearTimeout(critHit)
+				console.log('sound played')
+		}
+		
+
+}
 	// --- A function that contains the specific stats of the champ --- //
+
 
 	var champStats = function (name, hitPoints, attPower, icon, hit) {
 		this.name = name;
@@ -55,17 +99,17 @@ $(document).ready(function() {
 	// --- all playable champions available --- //
 
 	var champions = [ 
-		new champStats('Hera', 3300, 170, '<img src="assets/images/2078.png">', '<img src="assets/images/2078-hit.png">'),
-		new champStats('SuperGirl', 3300, 110, '<img src="assets/images/1678.png">', '<img src="assets/images/1678-hit.png">'), 
+		new champStats('Hera', 1200, 270, '<img src="assets/images/2078.png">', '<img src="assets/images/2078-hit.png">'),
+		new champStats('SuperGirl', 2300, 210, '<img src="assets/images/1678.png">', '<img src="assets/images/1678-hit.png">'), 
 		// new champStats('Aphrodite', 4000, 165, '<img src="assets/images/2534.png">'/*, 40 */), 
-		new champStats('Sasha', 3500, 120, '<img src="assets/images/2372.png">', '<img src="assets/images/2372-hit.png">'/*, 15 */), 
+		new champStats('Sasha', 1500, 220, '<img src="assets/images/2372.png">', '<img src="assets/images/2372-hit.png">'/*, 15 */), 
 		// new champStats('Artemis', 4200, 220, '<img src="assets/images/3274.png">'/*, 12 */), 
-		new champStats('Hades', 3800, 155, '<img src="assets/images/1949.png">', '<img src="assets/images/1949-hit.png">'), 
-		new champStats('Sephiroth', 3200, 200, '<img src="assets/images/2032.png">', '<img src="assets/images/2032-hit.png">'), 
-		new champStats('Ares', 3650, 195, '<img src="assets/images/2081.png">', '<img src="assets/images/2081-hit.png">'/*, 30 */), 
+		new champStats('Hades', 1800, 255, '<img src="assets/images/1949.png">', '<img src="assets/images/1949-hit.png">'), 
+		new champStats('Sephiroth', 1200, 300, '<img src="assets/images/2032.png">', '<img src="assets/images/2032-hit.png">'), 
+		new champStats('Ares', 1650, 295, '<img src="assets/images/2081.png">', '<img src="assets/images/2081-hit.png">'/*, 30 */), 
 		// new champStats('Athena', 3500, 215, '<img src="assets/images/3285.png">' /*, 6 */), 
-		new champStats('Rei', 4200, 175, '<img src="assets/images/3393.png">', '<img src="assets/images/3393-hit.png">'), 
-		new champStats('Asuka', 3600, 185, '<img src="assets/images/3396.png">', '<img src="assets/images/3396-hit.png">'), 
+		new champStats('Rei', 2200, 275, '<img src="assets/images/3393.png">', '<img src="assets/images/3393-hit.png">'), 
+		new champStats('Asuka', 1600, 285, '<img src="assets/images/3396.png">', '<img src="assets/images/3396-hit.png">'), 
 		// new champStats('Zues', 5000, 95, '<img src="assets/images/851.png">' /*, 70 */)
 	]; // -- END champions
 
@@ -100,7 +144,7 @@ var gameStart = function() {
 
 	$('.champ').on('click', function(event){										// adding the champ to the selected champ section (this section is different from the space with all the champs)
 			
-		if (champLocked === false) {
+		if (!champLocked) {
 			champSelection = $('<div>');											// deciding that I will make the section a new Div
 			$('.champFader').not(this).removeClass('champFader');
 			$(this).addClass('champFader');											// adding an ID can only be added to 1 element, so the last element you picked will have this ID and no other
@@ -229,9 +273,10 @@ var gameStart = function() {
 		setTimeout(function(){
 		
 			$('#playerChamp').find('.champ').addClass('characterShake').html(playerChamp.icon);
-			punch1.play();
+			playSound();
 		
 		}, 300);
+		console.log('sound played')
 
 		$('#enemyChamp').find('.champ').html(enemyChamp.hit).removeClass('characterShake');
 		
@@ -240,7 +285,8 @@ var gameStart = function() {
 			$('#enemyChamp').find('.champ').addClass('characterShake').html(enemyChamp.icon);
 			if (playerChamp.attack === enemyChamp.hp || playerChamp.attack > enemyChamp.hp) {
 			} else {
-				punch2.play();
+				playSound();
+				console.log('sound played')
 			}
 		
 		}, 600);
@@ -249,20 +295,29 @@ var gameStart = function() {
 		$('#damageUpdate').show();
 
  		animation();
+
+ 		///// COMBAT STARTS HERE //////
  		
  		if ( !combat && playerChamp.hp > 0 ) { // if combat is false, have them choose another champ
 
  			$('#damageUpdate').html('Choose another opponent!');
 
- 		} else if ( combat === true && playerChamp.hp <= 0) { // if combat is false AND player HP is <= 0, console.log you're dead
- 			
- 			$('#damageUpdate').html("You're Dead");
- 			combat = false;
- 			enemyLocked = false;
+ 		} else if ( combat === true && playerChamp.hp <= 0) {
+ 					
+ 					$("#attBtn").hide();
+ 					playerChamp.hp = 0;
+
+ 					$(arenaChamp).html(
+					`	<p>${playerChamp.name}</p>
+        		 		<p>HP ${playerChamp.hp}</p>
+        		 		<p>attack ${playerChamp.attack}</p>	`
+					)
+ 					$('#damageUpdate').html('<h1>' + "You Died...");
+				
 
  		} else if ( combat === true ){
  			
- 			if (playerChamp.attack < enemyChamp.hp) {
+ 			if (playerChamp.attack < enemyChamp.hp && playerChamp.hp > enemyChamp.attack) {
 					
 					enemyChamp.hp -= playerChamp.attack;
 					$('#damageUpdate').html("You hit for " + playerChamp.attack + "<p>" + "<hr>");
@@ -281,20 +336,30 @@ var gameStart = function() {
     				); // --- END Arena PLAYER update
 
 					playerChamp.attack += 50;
+					crit();
 					$('#damageUpdate').show();
 					$('#damageUpdate').html(playerChamp.name + " You hit for  " + "<h1>" + playerChamp.attack + "<p>" +  "<hr>");
 					setTimeout(function(){
 						$('#damageUpdate').html(enemyChamp.name + " Hit back for " + "<h1>" + enemyChamp.attack + "<p>" +  "<hr>");
-					}, 600)
+					}, 300)
 					
 
 			} //--- END Champ.attack < Enemy.hp
 			  else if (enemyChamp.attack > playerChamp.hp || enemyChamp.attack === playerChamp.hp) {
 	
- 					console.log("you died!")
- 					$('#damageUpdate').html("You Died...");
-					enemyLocked = false;
+ 					$("#attBtn").hide();
+ 					playerChamp.hp = 0;
+
+ 					$(arenaChamp).html(
+					`	<p>${playerChamp.name}</p>
+        		 		<p>HP ${playerChamp.hp}</p>
+        		 		<p>attack ${playerChamp.attack}</p>	`
+        		 	)
+ 					$('#damageUpdate').html('<h1>' + "You Died...");
+ 					$('#reset').html('Try Again');
+					
 					combat = false;
+					
 
 			} else if (playerChamp.attack === enemyChamp.hp || playerChamp.attack > enemyChamp.hp) {
 					
@@ -313,19 +378,17 @@ var gameStart = function() {
 
 					$("#attBtn").hide();
 
-					$('#damageUpdate').append("Wins: " + wins + "." + " Choose a new Opponent");
+					$('#damageUpdate').append('Wins: ' + wins + '.' + ' Choose a new Opponent');
 					combat = false;
 
 					if (wins === 3) {
-						$('#damageUpdate').html('You Win!'	);
+						$('#damageUpdate').html('<h1>' + 'You Win!'	);
 					} //--- END WIN statement
 					  
 					  else { //restart enemy selection and combat
 						enemyLocked = false;
 						combat = false;
 					} // --- END else, restart combat
-
-			} else if (enemyChamp.attack > playerChamp.hp || enemyChamp.attack === playerChamp.hp ) { 
 			
 			} // end attack combat
  		
