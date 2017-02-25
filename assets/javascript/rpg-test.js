@@ -286,6 +286,7 @@ var gameStart = function() {
 			}
 		}, 600);
 	}
+
 		
 		$('#damageUpdate').show();
 		animation();
@@ -329,6 +330,7 @@ var gameStart = function() {
     				); // --- END Arena PLAYER update
 
 					playerChamp.attack += 50;
+					console.log(playerChamp.name + ' hit for: ' + playerChamp.attack);
 					crit();
 					$('#damageUpdate').show();
 					$('#damageUpdate').html(playerChamp.name + " You hit for  " + "<h1>" + playerChamp.attack + "<p>" +  "<hr>");
@@ -395,6 +397,7 @@ var gameStart = function() {
 };
 
 	$('#reset').on('click', function(){
+			$("#attBtn").unbind("click");
 			console.log('reset');
 			$( '#enemyChamp' ).empty();
 			$( '#playerChamp' ).empty();
@@ -403,10 +406,12 @@ var gameStart = function() {
 			$( '#arenaChamp' ).empty();
 			$( '#arenaEnemy' ).empty();
 			$( '#champAvailable' ).empty();
+			// $( '#attBtn' ).empty();
 			combat = false;
 			champLocked = false;
 			enemyLocked = false;
 			$('#champAvailable').each(function(){})
+			// playerChamp.attack = data;
 			wins = 0;
 			gameStart();
 			
